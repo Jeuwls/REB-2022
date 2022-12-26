@@ -9,6 +9,11 @@ namespace REB{
         private List<Activity> responding = new List<Activity>();
         private List<Activity> executed = new List<Activity>();
 
+        public DCRGraph()
+        {
+
+        }
+
         public List<Activity> GetIncluded(List<Activity> activities){
             return included;
         }
@@ -32,6 +37,31 @@ namespace REB{
         {
             Activity a = new Activity(nid);
             Activities.Add(a);
+        }
+
+        public void AddRelation(string sid, string tid, RelationType rt)
+        {
+            Activity src = Activities.Find(x => x.id == sid);
+            if (src == null) return;
+
+            Activity tgt = Activities.Find(x => x.id == tid);
+            if (tgt == null) return;
+
+            Relation rel = new Relation(src, tgt, rt);
+            src.AddRelation(rel);
+            tgt.AddRelation(rel);
+
+            tgt.GetRelations();
+            // Console.WriteLine(tgt.Enabled());
+            // Relation rel = new Relation()
+        }
+
+        public void ExecuteActivity(string id)
+        {
+            Activity e = Activities.Find(x => x.id == id);
+            if (e == null) return;
+
+            e.Execute();
         }
     }
 }

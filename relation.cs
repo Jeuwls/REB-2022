@@ -21,5 +21,10 @@ namespace REB
             Target = tgt;
             RelationType = rel;
         }
+        
+        public override string ToString()
+        {
+            return $"Source: {Source.id}, Target: {Target.id}, Type: {RelationType}";
+        }
     }
 }

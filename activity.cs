@@ -1,6 +1,6 @@
 namespace REB {
     public class Activity {
-        private string id;
+        public string id { get; private set;}
         // private List<Relation> conditions = new List<Relation>();
         // private List<Relation> responses = new List<Relation>();
         // private List<Relation> milestones = new List<Relation>();
@@ -10,7 +10,7 @@ namespace REB {
         private bool _pending = false;
         private bool _executable;
 
-        public bool Executed {get; private set;} = true;
+        public bool Executed {get; private set;} = false;
         public bool Included {get; private set;} = true;
         public bool Executable
         {
@@ -39,23 +39,30 @@ namespace REB {
 
         public void AddRelation(Relation relation)
         {
-            switch (relation.RelationType)
+            if (this == relation.Source)
             {
-                case RelationType.Condition:
-                    relation.Target.SetNotExecuteable();
-                    break;
-                case RelationType.Milestone:
-                    if (Pending)
-                    {
+                switch (relation.RelationType)
+                {
+                    case RelationType.Condition:
                         relation.Target.SetNotExecuteable();
-                    }
-                    break;
+                        break;
+                    case RelationType.Milestone:
+                        if (Pending)
+                        {
+                            relation.Target.SetNotExecuteable();
+                        }
+                        break;
+                }
             }
             relations.Add(relation);
         }
     
         public void Execute () {
-            if (!Enabled()) return;
+            if (!Enabled())
+            {
+                Console.WriteLine($"Activity {id} is not enabled!");
+                return;
+            }
             Executed = true;
             Pending = false;
 
@@ -77,6 +84,8 @@ namespace REB {
                         break;
                 }
             }
+
+            Console.WriteLine($"Activity {id} executed successfully.");
             
             // if (!Executed) {
             //     foreach (Activity condition in conditions) {
@@ -114,6 +123,14 @@ namespace REB {
                 }
             }
             return true;
+        }
+
+        public void GetRelations()
+        {
+            foreach (Relation r in relations)
+            {
+                Console.WriteLine(r);
+            }
         }
 
         public void SetExecuteable () {

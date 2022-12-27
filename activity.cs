@@ -1,22 +1,18 @@
 namespace REB {
     public class Activity {
-        public string id { get; private set;}
-        // private List<Relation> conditions = new List<Relation>();
-        // private List<Relation> responses = new List<Relation>();
-        // private List<Relation> milestones = new List<Relation>();
-        // private List<Relation> includes = new List<Relation>();
-        // private List<Relation> excludes = new List<Relation>();
-        private List<Relation> relations = new List<Relation>();
+        public string eId { get; private set;}
+        public string lId { get; private set;}
+        // private List<Constraint> conditions = new List<Constraint>();
+        // private List<Constraint> responses = new List<Constraint>();
+        // private List<Constraint> milestones = new List<Constraint>();
+        // private List<Constraint> includes = new List<Constraint>();
+        // private List<Constraint> excludes = new List<Constraint>();
+        private List<Constraint> constraints = new List<Constraint>();
         private bool _pending = false;
-        private bool _executable;
 
         public bool Executed {get; private set;} = false;
-        public bool Included {get; private set;} = true;
-        public bool Executable
-        {
-            get { if (Included) {return _executable;} else {return false;} }
-            private set { _executable = value; }
-        }
+        public bool Included {get; private set;} = false;
+        public bool Enabled {get; private set;} = true;
         public bool Pending 
         {
             get { if (Included) { return _pending; } return false;}
@@ -24,68 +20,69 @@ namespace REB {
         }
         public bool Accepting {get; private set;} = true;
         
-        public Activity (string nid) {
-            this.id = nid;
+        public Activity (string eventId, string labelId) {
+            this.eId = eventId;
+            this.lId = labelId;
+            Included = false;
         }
 
-        public void AddCondition (Relation conditional) {
+        public void AddCondition (Constraint conditional) {
             conditional.Target.SetNotExecuteable();
-            relations.Add(conditional);
+            constraints.Add(conditional);
         }
 
-        public void AddResponse (Relation response) {
-            relations.Add(response);
+        public void AddResponse (Constraint response) {
+            constraints.Add(response);
         }
 
-        public void AddRelation(Relation relation)
+        public void AddConstraint(Constraint Constraint)
         {
-            if (this == relation.Source)
+            if (this == Constraint.Source)
             {
-                switch (relation.RelationType)
+                switch (Constraint.ConstraintType)
                 {
-                    case RelationType.Condition:
-                        relation.Target.SetNotExecuteable();
+                    case ConstraintType.Condition:
+                        Constraint.Target.SetNotExecuteable();
                         break;
-                    case RelationType.Milestone:
-                        if (Pending)
-                        {
-                            relation.Target.SetNotExecuteable();
+                    case ConstraintType.Milestone:
+                        if (Pending) {
+                            Constraint.Target.SetNotExecuteable();
                         }
                         break;
                 }
             }
-            relations.Add(relation);
+            constraints.Add(Constraint);
         }
     
         public void Execute () {
-            if (!Enabled())
+            if (!Enabled)
             {
-                Console.WriteLine($"Activity {id} is not enabled!");
+                Console.WriteLine($"Activity {eId}->{lId} is not enabled!");
                 return;
             }
             Executed = true;
             Pending = false;
 
-            foreach (Relation r in relations.Where(x => x.Source == this))
+            foreach (Constraint r in constraints.Where(x => x.Source == this))
             {
-                switch (r.RelationType)
+                switch (r.ConstraintType)
                 {
-                    case RelationType.Condition:
-                        r.Target.SetExecuteable();
-                        break;
-                    case RelationType.Response:
+                    case ConstraintType.Response:
                         r.Target.SetPending();
                         break;
-                    case RelationType.Exclusion:
-                        r.Target.SetExclude();
+                    case ConstraintType.Exclusion:
+                        r.Target.SetIncluded(false);
                         break;
-                    case RelationType.Inclusion:
-                        r.Target.SetIncluded();
+                    case ConstraintType.Inclusion:
+                        r.Target.SetIncluded(true);
+                        break;
+                    case ConstraintType.Condition:
+                        r.Target.SetExecuteable();
                         break;
                 }
             }
 
-            Console.WriteLine($"Activity {id} executed successfully.");
+            Console.WriteLine($"Activity {eId}->{lId} executed successfully.");
             
             // if (!Executed) {
             //     foreach (Activity condition in conditions) {
@@ -98,23 +95,33 @@ namespace REB {
             // }
         }
 
-        public bool Enabled()
+        public bool IsEnabled()
         {
-            foreach (Relation r in relations.Where(x => x.Target == this))
+            // Check if I'm included
+            if (!Included) {
+                Enabled = false;
+                return Enabled;
+            }
+
+            // Check if we are blocked by unexecuted condition events 
+            // or pending milestones
+            foreach (Constraint r in constraints.Where(x => x.Target == this))
             {
-                switch (r.RelationType)
+                switch (r.ConstraintType)
                 {
-                    case RelationType.Condition:
+                    case ConstraintType.Condition:
                         if (r.Source.Included && !r.Source.Executed)
                         {
-                            return false;
+                            Enabled = false;
+                            return Enabled;
                         }
                         break;
                     
-                    case RelationType.Milestone:
+                    case ConstraintType.Milestone:
                         if (r.Source.Included && r.Source.Pending)
                         {
-                            return false;
+                            Enabled = false;
+                            return Enabled;
                         }
                         break;
                     
@@ -122,34 +129,28 @@ namespace REB {
                         break;
                 }
             }
-            return true;
+            Enabled = true;
+            return Enabled;
         }
 
-        public void GetRelations()
+        public void GetConstraint()
         {
-            foreach (Relation r in relations)
+            foreach (Constraint r in constraints)
             {
                 Console.WriteLine(r);
             }
         }
 
         public void SetExecuteable () {
-            if (Executable) return;
-            Executable = true;
+            Enabled = true;
         }
 
         public void SetNotExecuteable () {
-            if (!Executable) return; 
-            Executable = false;
+            Enabled = false;
         }
 
-        public void SetExclude () {
-            if (!Included) return; 
-            Included = false; 
-        }
-
-        public void SetIncluded () {
-            Included = true; 
+        public void SetIncluded (bool value) {
+            Included = value; 
         } 
 
         public void SetPending() {
@@ -168,6 +169,7 @@ namespace REB {
             return false;
         }
         
+
 
         //if not included 
 

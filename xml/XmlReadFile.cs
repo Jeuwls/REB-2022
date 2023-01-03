@@ -52,7 +52,7 @@ namespace REB {
         }
         private static void GetIncludedActivities(XmlNodeList gia, DCRGraph graph) {
 
-        System.Console.WriteLine("Printing nodes in graph");
+        // System.Console.WriteLine("Printing nodes in graph");
         // foreach (Activity node in graph.Activities) {
         //     System.Console.WriteLine(node.eId);
         // }

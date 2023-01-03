@@ -60,13 +60,14 @@ namespace REB {
 
             if (thisTrace && graph.IsAccepting()) traceValid++;
             else traceInvalid ++;
-            Console.WriteLine("Valid traces: {0}, Invalid traces: {1}", traceValid, traceInvalid);
+            Console.WriteLine("Total Valid traces: {0}, Invalid traces: {1}", traceValid, traceInvalid);
 
             // foreach (string trace in validtraces) {
             for (int i = 0; i < validtraces.Count; ++i)
             {
                 System.Console.WriteLine($"\tValid trace {i+1} trace ID: {validtraces[i]}");
             }
+            System.Console.WriteLine("");
         }
     }
 }

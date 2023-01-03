@@ -27,9 +27,10 @@ namespace REB {
 
         public bool IsAccepting()
         {
-            responding = ((List<Activity>)Activities.Where(x => x.IsPending()));
-            if (responding.Count != 0) return true;
-            else return false;
+            responding = (List<Activity>)Activities.Where(x => x.IsPending()).ToList<Activity>();
+            return (responding.Count == 0);
+            // if (responding.Count != 0) return true;
+            // else return false;
         }
 
         private void UpdateIncluded()
@@ -64,7 +65,7 @@ namespace REB {
 
         public void GetState(){
             foreach (Activity a in Activities) {
-                Console.WriteLine($"eventid = {a.eId}, label = {a.lId}");
+                Console.WriteLine($"eventid = {a.eId}, label = {a.lId}, isPending = {a.Pending}");
             }
         }
         public List<Activity> GetActivities(){

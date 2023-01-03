@@ -42,23 +42,25 @@ namespace REB {
             for (int i = 1; i < csv.Length/3; i++) {
                 if (csv[i,0]== preID){
                     // lookup and run event
-                    bool tmp = graph.ExecuteActivity(csv[i,1]);
+                    bool tmp = currentRun.ExecuteActivity(csv[i,1]);
                     if (!tmp) thisTrace = false;
                 }
                 else {
-                    if (thisTrace) traceValid++; // Add valid trace to list
+                    if (thisTrace && (currentRun.IsAccepting() == true)) {
+                        validtraces.Add(preID);
+                        traceValid++; // Add valid trace to list
+                    }
                     else traceInvalid ++;
-                    if (thisTrace) validtraces.Add(preID);
                     preID = csv[i,0];
                     currentRun = graph;
                     thisTrace = true;
-                    bool tmp = graph.ExecuteActivity(csv[i,1]);
+                    bool tmp = currentRun.ExecuteActivity(csv[i,1]);
                     if (!tmp) thisTrace = false;
                 }
 
             }
 
-            if (thisTrace && graph.IsAccepting()) traceValid++;
+            if (thisTrace && currentRun.IsAccepting()) traceValid++;
             else traceInvalid ++;
             Console.WriteLine("Total Valid traces: {0}, Invalid traces: {1}", traceValid, traceInvalid);
 

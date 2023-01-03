@@ -23,12 +23,12 @@ namespace REB
 
         private static void ExtractConditions(XmlNodeList cond, List<Activity> activities, DCRGraph graph) {
             foreach (XmlNode elem in cond) {
-                Activity src = activities.Find(x => x.eId == elem.Attributes[0].Value);
+                Activity src = activities.Find(x => x.eId == elem.Attributes[0].Value.ToLower());
                 if (src == null) {
                     System.Console.WriteLine("Source: {0} does not exist in the DCR graph", elem.Attributes[0].Value);
 
                 }
-                Activity tgt = activities.Find(x => x.eId == elem.Attributes[1].Value);
+                Activity tgt = activities.Find(x => x.eId == elem.Attributes[1].Value.ToLower());
                 if (tgt == null) {
                     System.Console.WriteLine("Target: {0} does not exist in the DCR graph", elem.Attributes[1].Value);
 
@@ -39,12 +39,12 @@ namespace REB
         private static void ExtractExclude(XmlNodeList cond, List<Activity> activities, DCRGraph graph) {
          
             foreach (XmlNode elem in cond) {
-                Activity src = activities.Find(x => x.eId == elem.Attributes[0].Value);
+                Activity src = activities.Find(x => x.eId == elem.Attributes[0].Value.ToLower());
                 if (src == null) {
                     System.Console.WriteLine("Activity: {0} does not exist in the DCR graph", elem.Attributes[0].Value);
                 }
     
-                Activity tgt = activities.Find(x => x.eId == elem.Attributes[1].Value);
+                Activity tgt = activities.Find(x => x.eId == elem.Attributes[1].Value.ToLower());
                 if (tgt == null) {
                     System.Console.WriteLine("Activity: {0} does not exist in the DCR graph", elem.Attributes[1].Value);
                 };
@@ -54,12 +54,12 @@ namespace REB
         }
         private static void ExtractInclude(XmlNodeList cond, List<Activity> activities, DCRGraph graph) {
             foreach (XmlNode elem in cond) {
-                Activity src = activities.Find(x => x.eId == elem.Attributes[0].Value);
+                Activity src = activities.Find(x => x.eId == elem.Attributes[0].Value.ToLower());
                 if (src == null) {
                     System.Console.WriteLine("Activity: {0} does not exist in the DCR graph", elem.Attributes[0].Value);
                 }
     
-                Activity tgt = activities.Find(x => x.eId == elem.Attributes[1].Value);
+                Activity tgt = activities.Find(x => x.eId == elem.Attributes[1].Value.ToLower());
                 if (tgt == null) {
                     System.Console.WriteLine("Activity: {0} does not exist in the DCR graph", elem.Attributes[1].Value);
                 };
@@ -70,12 +70,12 @@ namespace REB
         private static void ExtractResponse(XmlNodeList cond, List<Activity> activities, DCRGraph graph) {
          
             foreach (XmlNode elem in cond) {
-                Activity src = activities.Find(x => x.eId == elem.Attributes[0].Value);
+                Activity src = activities.Find(x => x.eId == elem.Attributes[0].Value.ToLower());
                 if (src == null) {
                     System.Console.WriteLine("Activity: {0} does not exist in the DCR graph", elem.Attributes[0].Value);
                 }
     
-                Activity tgt = activities.Find(x => x.eId == elem.Attributes[1].Value);
+                Activity tgt = activities.Find(x => x.eId == elem.Attributes[1].Value.ToLower());
                 if (tgt == null) {
                     System.Console.WriteLine("Activity: {0} does not exist in the DCR graph", elem.Attributes[1].Value);
                 };
@@ -86,12 +86,12 @@ namespace REB
         private static void ExtractMilestone(XmlNodeList cond, List<Activity> activities, DCRGraph graph) {
          
             foreach (XmlNode elem in cond) {
-                Activity src = activities.Find(x => x.eId == elem.Attributes[0].Value);
+                Activity src = activities.Find(x => x.eId == elem.Attributes[0].Value.ToLower());
                 if (src == null) {
                     System.Console.WriteLine("Activity: {0} does not exist in the DCR graph", elem.Attributes[0].Value);
                 }
     
-                Activity tgt = activities.Find(x => x.eId == elem.Attributes[1].Value);
+                Activity tgt = activities.Find(x => x.eId == elem.Attributes[1].Value.ToLower());
                 if (tgt == null) {
                     System.Console.WriteLine("Activity: {0} does not exist in the DCR graph", elem.Attributes[1].Value);
                 };

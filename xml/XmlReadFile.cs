@@ -16,18 +16,15 @@ namespace REB {
 
             Console.WriteLine("Found path");
 
-            
             XmlDocument doc = new XmlDocument();
             doc.Load(pathxml);
-
+            
             XmlNodeList activityNodeList = (doc.SelectNodes("dcrgraph/specification/resources/labelMappings/labelMapping"));
             
             DCRGraph Result = new DCRGraph();
 
             ExtractActivities(activityNodeList, Result);
 
-            // XmlNodeList constraintNodeList = (doc.SelectNodes("dcrgraph/specification/constraints"));
-            
 
             ConstraintExtractor.Extract(doc, Result);
 
@@ -43,14 +40,15 @@ namespace REB {
         private static void ExtractActivities(XmlNodeList aq, DCRGraph graph) {
 
         foreach (XmlNode elem in aq) {
-                Activity tmp = new Activity(elem.Attributes[0].Value, elem.Attributes[1].Value);
+                // eventId, labelID
+                Activity tmp = new Activity(elem.Attributes[0].Value.ToLower(), elem.Attributes[1].Value.ToLower());
                 graph.AddActivity(tmp);
             }
         }
         private static void GetIncludedActivities(XmlNodeList gia, DCRGraph graph) {
 
         foreach (XmlNode elem in gia) {
-                (graph.Activities.Find(x => x.eId == elem.Attributes[0].Value)).SetIncluded(true);
+                (graph.Activities.Find(x => x.eId == elem.Attributes[0].Value.ToLower())).SetIncluded(true);
             }
         }
     }

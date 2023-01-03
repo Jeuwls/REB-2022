@@ -25,9 +25,11 @@ namespace REB {
             return included;
         }
 
-        private void UpdateResponding()
+        public bool IsAccepting()
         {
-            responding = (List<Activity>)Activities.Where(x => x.IsPending());
+            responding = ((List<Activity>)Activities.Where(x => x.IsPending()));
+            if (responding.Count != 0) return true;
+            else return false;
         }
 
         private void UpdateIncluded()
@@ -47,19 +49,9 @@ namespace REB {
 
         public void AddConstraint(Activity src, Activity tgt, ConstraintType rt)
         {
-            // Activity src = Activities.Find(x => x.lId == sid);
-            // if (src == null) return;
-
-            // Activity tgt = Activities.Find(x => x.lId == tid);
-            // if (tgt == null) return;
-
             Constraint con = new Constraint(src, tgt, rt);
             src.AddConstraint(con);
             tgt.AddConstraint(con);
-
-            // tgt.GetConstraint();
-            // Console.WriteLine(tgt.Enabled());
-            // Constraint rel = new Constraint()
         }
 
         public bool ExecuteActivity(string id)
@@ -73,7 +65,6 @@ namespace REB {
         public void GetState(){
             foreach (Activity a in Activities) {
                 Console.WriteLine($"eventid = {a.eId}, label = {a.lId}");
-                // Console.WriteLine($"{a.}");
             }
         }
         public List<Activity> GetActivities(){

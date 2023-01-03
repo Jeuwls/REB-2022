@@ -8,9 +8,13 @@ namespace REB {
 
             //Get two string paths 
             //path/csv path/xml
-            //string pathcsv = args[0];
-            string pathxml = "files\\assignment-1-part-2-task-2.xml";
-            string pathcsv = "files\\convertcsv.csv";
+
+            if (args.Length < 2) {
+                System.Console.WriteLine("Input XML and CSV file path");
+                System.Environment.Exit(0);
+            } 
+            string pathxml = args[0];
+            string pathcsv = args[1];
 
             string[,] csv = ImportCSV.Import(pathcsv);
 
@@ -36,14 +40,11 @@ namespace REB {
                 if (csv[i,0]== preID){
                     // lookup and run event
                     bool tmp = graph.ExecuteActivity(csv[i,1]);
-                    System.Console.WriteLine(tmp);
                     if (!tmp) thisTrace = false;
                 }
                 else {
-                    if (thisTrace) traceValid++;
+                    if (thisTrace) traceValid++; // Add valid trace to list
                     else traceInvalid ++;
-
-                    // System.Console.WriteLine(preID);
                     if (thisTrace) validtraces.Add(preID);
                     preID = csv[i,0];
                     currentRun = graph;
@@ -52,16 +53,16 @@ namespace REB {
                     if (!tmp) thisTrace = false;
                 }
 
-                // System.Console.Write($"{i}\t");
-                // System.Console.WriteLine("id = {0}, Title = {1}, Date = {2}",csv[i,0], csv[i,1], csv[i,2]);
             }
 
-            if (thisTrace) traceValid++;
+            if (thisTrace && graph.IsAccepting()) traceValid++;
             else traceInvalid ++;
             Console.WriteLine("Valid traces: {0}, Invalid traces: {1}", traceValid, traceInvalid);
 
-            foreach (string trace in validtraces) {
-                System.Console.WriteLine(trace);
+            // foreach (string trace in validtraces) {
+            for (int i = 0; i < validtraces.Count; ++i)
+            {
+                System.Console.WriteLine($"Valid trace {i+1} trace ID: {validtraces[i]}");
             }
 
             // graph.ExecuteActivity()

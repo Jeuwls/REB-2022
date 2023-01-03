@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\J\\.nuget\\packages\\": {}
+    "C:\\Users\\Johan\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\J\\Documents\\KU\\REB\\REB-2022\\REB-2022.csproj",
+      "projectUniqueName": "C:\\Users\\Johan\\OneDrive\\Universitet\\Datalogi\\5. semester\\REBS\\REB-2022\\REB-2022.csproj",
       "projectName": "REB-2022",
-      "projectPath": "C:\\Users\\J\\Documents\\KU\\REB\\REB-2022\\REB-2022.csproj",
-      "packagesPath": "C:\\Users\\J\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\J\\Documents\\KU\\REB\\REB-2022\\obj\\",
+      "projectPath": "C:\\Users\\Johan\\OneDrive\\Universitet\\Datalogi\\5. semester\\REBS\\REB-2022\\REB-2022.csproj",
+      "packagesPath": "C:\\Users\\Johan\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Johan\\OneDrive\\Universitet\\Datalogi\\5. semester\\REBS\\REB-2022\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\J\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Johan\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"

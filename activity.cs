@@ -13,6 +13,7 @@ namespace REB {
         public bool Executed {get; private set;} = false;
         public bool Included {get; private set;} = false;
         public bool Enabled {get; private set;} = true;
+        private List<Activity> nestedActivities = new List<Activity>();
         public bool Pending 
         {
             get { if (Included) { return _pending; } return false;}
@@ -179,11 +180,8 @@ namespace REB {
             lId = label;
         }
         
-
-
-        //if not included 
-
-        
-    
+        public void AddNestedActivity(Activity activity){
+            nestedActivities.Add(activity);
+        }    
     }
 }

@@ -41,26 +41,35 @@ namespace REB {
                 // eventId, labelID
                 Activity tmp = new Activity(elem.Attributes[0].Value.ToLower());
                 graph.AddActivity(tmp);
+                foreach (XmlNode node in  elem.SelectNodes("event")) {
+                    RecNodeSearchActivities(node, elem, graph);
+                }
             }
 
         foreach (XmlNode elem in labelmapping) {
-                // eventId, labelID
                 graph.Activities.Find(x => x.eId == elem.Attributes[0].Value.ToLower()).SetLabel(elem.Attributes[1].Value.ToLower());
-                // Activity tmp = new Activity(elem.Attributes[0].Value.ToLower(), elem.Attributes[1].Value.ToLower());
-                // graph.AddActivity(tmp);
             }
         }
         private static void GetIncludedActivities(XmlNodeList gia, DCRGraph graph) {
 
         System.Console.WriteLine("Printing nodes in graph");
-        foreach (Activity node in graph.Activities) {
-            System.Console.WriteLine(node.eId);
+        // foreach (Activity node in graph.Activities) {
+        //     System.Console.WriteLine(node.eId);
+        // }
+
+        // System.Console.WriteLine("\nPrinting elem in gia");
+        foreach (XmlNode elem in gia) {
+                // System.Console.WriteLine(elem.Attributes[0].Value);
+                (graph.Activities.Find(x => x.eId == elem.Attributes[0].Value.ToLower())).SetIncluded(true);
+            }
         }
 
-        System.Console.WriteLine("\nPrinting elem in gia");
-        foreach (XmlNode elem in gia) {
-                System.Console.WriteLine(elem.Attributes[0].Value);
-                (graph.Activities.Find(x => x.eId == elem.Attributes[0].Value.ToLower())).SetIncluded(true);
+        private static void RecNodeSearchActivities(XmlNode elem, XmlNode Parent, DCRGraph graph) {
+            // eventId, labelID
+            Activity tmp = new Activity(elem.Attributes[0].Value.ToLower());
+            graph.AddActivity(tmp);
+            foreach (XmlNode node in  elem.SelectNodes("event")) {
+                RecNodeSearchActivities(node, elem, graph);
             }
         }
     }

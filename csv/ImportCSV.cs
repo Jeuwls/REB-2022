@@ -15,7 +15,7 @@ namespace REB{
                 result[i,1] = columns[2].ToLower();
                 result[i,2] = columns[4].ToLower();
             }
-        System.Console.WriteLine(lines);
+        //System.Console.WriteLine(lines);
         return result;
         }       
     }

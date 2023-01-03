@@ -1,31 +1,34 @@
 ﻿using System;
+using System.Threading;
 using System.Collections;
 namespace REB {
     class Program {
         static void Main(string[] args) {
-        // Display the number of command line arguments.
-            //Console.WriteLine(args.Length);
-
-            //Get two string paths 
-            //path/csv path/xml
-
             if (args.Length < 2) {
-                System.Console.WriteLine("Input XML and CSV file path");
-                System.Environment.Exit(0);
+                System.Console.WriteLine("No input given, running tests");
+                Thread.Sleep(1000);
+                Test.RunTest();
             } 
-            string pathxml = args[0];
-            string pathcsv = args[1];
-
-            string[,] csv = ImportCSV.Import(pathcsv);
-
-            DCRGraph graph= XmlReadFile.ReadFile(pathxml);
-
-            graph.GetState();
-            foreach (Activity activity in graph.Activities) {
-                System.Console.WriteLine("Activity: {0} with eID: {1}, is enabled = {2}", activity.lId, activity.eId, activity.IsEnabled());
+            else {
+                string pathxml = args[0];
+                string pathcsv = args[1];
+                TestGraph(pathxml, pathcsv);
             }
+        }
+
+
+        public static void TestGraph(string XML, string CSV) {
+
+            string[,] csv = ImportCSV.Import(CSV);
+
+            DCRGraph graph= XmlReadFile.ReadFile(XML);
+
+            //graph.GetState();
+            // foreach (Activity activity in graph.Activities) {
+            //     System.Console.WriteLine("Activity: {0} with eID: {1}, is enabled = {2}", activity.lId, activity.eId, activity.IsEnabled());
+            // }
         
-            System.Console.WriteLine($"# csv lines: {csv.Length/3}");
+            //System.Console.WriteLine($"# csv lines: {csv.Length/3}");
 
             // loop setup:
 
@@ -62,11 +65,8 @@ namespace REB {
             // foreach (string trace in validtraces) {
             for (int i = 0; i < validtraces.Count; ++i)
             {
-                System.Console.WriteLine($"Valid trace {i+1} trace ID: {validtraces[i]}");
+                System.Console.WriteLine($"\tValid trace {i+1} trace ID: {validtraces[i]}");
             }
-
-            // graph.ExecuteActivity()
-
         }
     }
 }

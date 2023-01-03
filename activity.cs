@@ -20,11 +20,17 @@ namespace REB {
         }
         public bool Accepting {get; private set;} = true;
         
+        public Activity (string eventId) {
+            this.eId = eventId;
+            this.lId = eventId;
+            Included = false;
+        }
+        
         public Activity (string eventId, string labelId) {
             this.eId = eventId;
             this.lId = labelId;
             Included = false;
-        }
+        }        
 
         public void AddCondition (Constraint conditional) {
             conditional.Target.SetNotExecuteable();
@@ -82,7 +88,7 @@ namespace REB {
                 }
             }
 
-            Console.WriteLine($"Activity {eId}->{lId} executed successfully.");
+            // Console.WriteLine($"Activity {eId}->{lId} executed successfully.");
             
             // if (!Executed) {
             //     foreach (Activity condition in conditions) {
@@ -167,6 +173,10 @@ namespace REB {
                 return Pending;
             } 
             return false;
+        }
+
+        public void SetLabel(string label) {
+            lId = label;
         }
         
 

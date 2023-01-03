@@ -6,7 +6,6 @@ namespace REB {
     public static class XmlReadFile {
         
         public static DCRGraph ReadFile (string pathxml) {
-            Console.WriteLine("executed Readfile");
 
             try {
                 File.Exists(pathxml);
@@ -14,16 +13,17 @@ namespace REB {
                 System.Console.WriteLine(e.Message);
             }
 
-            Console.WriteLine("Found path");
-
             XmlDocument doc = new XmlDocument();
             doc.Load(pathxml);
-            
+
+            DCRGraph Result = new DCRGraph();
+            //ExtractActivities(eventNodeList, Result);
+
+            XmlNodeList eventNodeList = (doc.SelectNodes("dcrgraph/specification/resources/events/event"));
             XmlNodeList activityNodeList = (doc.SelectNodes("dcrgraph/specification/resources/labelMappings/labelMapping"));
             
-            DCRGraph Result = new DCRGraph();
 
-            ExtractActivities(activityNodeList, Result);
+            ExtractActivities(eventNodeList, activityNodeList, Result);
 
 
             ConstraintExtractor.Extract(doc, Result);
@@ -33,21 +33,33 @@ namespace REB {
             GetIncludedActivities(includedNodeList, Result);
 
             return Result;
-
         }
         
-        
-        private static void ExtractActivities(XmlNodeList aq, DCRGraph graph) {
+        private static void ExtractActivities(XmlNodeList activities, XmlNodeList labelmapping, DCRGraph graph) {
 
-        foreach (XmlNode elem in aq) {
+        foreach (XmlNode elem in activities) {
                 // eventId, labelID
-                Activity tmp = new Activity(elem.Attributes[0].Value.ToLower(), elem.Attributes[1].Value.ToLower());
+                Activity tmp = new Activity(elem.Attributes[0].Value.ToLower());
                 graph.AddActivity(tmp);
+            }
+
+        foreach (XmlNode elem in labelmapping) {
+                // eventId, labelID
+                graph.Activities.Find(x => x.eId == elem.Attributes[0].Value.ToLower()).SetLabel(elem.Attributes[1].Value.ToLower());
+                // Activity tmp = new Activity(elem.Attributes[0].Value.ToLower(), elem.Attributes[1].Value.ToLower());
+                // graph.AddActivity(tmp);
             }
         }
         private static void GetIncludedActivities(XmlNodeList gia, DCRGraph graph) {
 
+        System.Console.WriteLine("Printing nodes in graph");
+        foreach (Activity node in graph.Activities) {
+            System.Console.WriteLine(node.eId);
+        }
+
+        System.Console.WriteLine("\nPrinting elem in gia");
         foreach (XmlNode elem in gia) {
+                System.Console.WriteLine(elem.Attributes[0].Value);
                 (graph.Activities.Find(x => x.eId == elem.Attributes[0].Value.ToLower())).SetIncluded(true);
             }
         }

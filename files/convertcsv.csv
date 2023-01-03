@@ -1,7 +1,0 @@
-trace;_id;_label;_userid;_role;_user
-321321;Activity1;Fill out application;Portal:132131;Handle Case;Julian Pedersen
-321321;Activity13;Execute Abandon;Portal:132131;Handle Abandon;Julian Pedersen
-321321;Activity14;Change phase to Abandon;Portal:132131;Handle Abandon;Julian Pedersen
-2;Activity4; Write Report;Portal:132131;Handle Abandon;Julian Pedersen
-2;Activity4; Write Report;Portal:132131;Handle Abandon;Julian Pedersen
-3;Activity4; Write Report;Portal:132131;Handle Abandon;Julian Pedersen

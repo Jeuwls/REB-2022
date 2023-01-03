@@ -42,7 +42,7 @@ namespace REB {
                 Activity tmp = new Activity(elem.Attributes[0].Value.ToLower());
                 graph.AddActivity(tmp);
                 foreach (XmlNode node in  elem.SelectNodes("event")) {
-                    RecNodeSearchActivities(node, elem, graph);
+                    RecNodeSearchActivities(node, tmp, graph);
                 }
             }
 
@@ -64,12 +64,13 @@ namespace REB {
             }
         }
 
-        private static void RecNodeSearchActivities(XmlNode elem, XmlNode Parent, DCRGraph graph) {
+        private static void RecNodeSearchActivities(XmlNode elem, Activity parent, DCRGraph graph) {
             // eventId, labelID
             Activity tmp = new Activity(elem.Attributes[0].Value.ToLower());
             graph.AddActivity(tmp);
+            parent.AddNestedActivity(tmp);
             foreach (XmlNode node in  elem.SelectNodes("event")) {
-                RecNodeSearchActivities(node, elem, graph);
+                RecNodeSearchActivities(node, tmp, graph);
             }
         }
     }

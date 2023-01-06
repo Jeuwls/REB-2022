@@ -1,0 +1,8 @@
+trace_id;something;label;role;date
+234;something;Account number changed;agruser;2022-03-01
+234;something;Approve - to board;agruser;2022-03-01
+234;something;First payment;agruser;2022-03-01
+768;something;First payment;agruser;2022-03-01
+768;something;Account number changed;agruser;2022-03-01
+768;something;Approve - to board;agruser;2022-03-01
+768;something;Account number changed;agruser;2022-03-01

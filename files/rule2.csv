@@ -1,0 +1,4 @@
+trace_id;something;label;role;date
+234;something;Reject;agruser;2022-03-01
+234;something;Applicant informed;agruser;2022-03-01
+234;something;Change phase to Abort;agruser;2022-03-01

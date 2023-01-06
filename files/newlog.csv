@@ -1,0 +1,15 @@
+trace_id;something;label;role;date
+123;something;Fill out application;agruser;2022-03-01
+123;something;Execute Abandon;agruser;2022-03-01
+123;something;Change phase to Abandon;agruser;2022-03-01
+456;something;Account number changed;agruser;2022-04-04
+456;something;Fill out application;agruser;2022-04-04
+456;something;Approve changed account;agruser;2022-04-04
+456;something;Decide expert reviewer;agruser;2022-04-04
+456;something;Lawyer review;agruser;2022-04-04
+456;something;Reject;agruser;2022-04-04
+456;something;Applicant Informed;agruser;2022-04-04
+456;something;Change Phase to Abort;agruser;2022-04-04
+456;something;Change Phase to End Report;agruser;2022-04-04
+456;something;Write Report;agruser;2022-04-04
+456;something;Archive case;agruser;2022-04-04

@@ -71,6 +71,7 @@
 * Could have written ask()() as ResponseRequest, then we could have them all running concurrently
   * we have it OneWay so we need to run sequentially
 * Remember to talk and draw LTS
+* We made a choreography model in part 1.4 but called it a CCS model
 
 ## Choreographies
 

@@ -1,8 +1,14 @@
 # Notes
 
+
 ## Petri Net
 
 * Implictly one-way
+
+* WF- subclass of Petri-nets they have ÓNE input(i) and Óne output (o)
+  * Adding a transition from o to i results in a stongly connected petri net.
+
+* Implicit vs explicit ors + and splits.
 
 ## DCR
 
@@ -14,7 +20,6 @@
   * Problem with conditionals
   * Note: talk about self-conditioned pending (Heirarch blah, fig 6.)
 * Need to add (CHANGE PHASE TO ABANDON -->O EXECUTE ABANDON) <!-- not needed
-* WOO
 
 ### DCR Process Mining
 
@@ -46,7 +51,14 @@
 
 * It exists?
 
-## Ass3
+## Ass1 🍑🤏😩
+
+## Ass2 🍑🥈
+
+* Nesting conformance checker problem with xml extraction -- parent process not excluded properly
+  * could have been fixed if we chose another format (homemade)
+
+## Ass3 🍑🥉
 
 * Complementary ports: input/output
 * in Buyer:
@@ -58,7 +70,7 @@
     * We ask 1 seller at a time to discriminate between them
 * Could have written ask()() as ResponseRequest, then we could have them all running concurrently
   * we have it OneWay so we need to run sequentially
-* 
+* Remember to talk and draw LTS
 
 ## Choreographies
 
